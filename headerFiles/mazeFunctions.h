@@ -36,8 +36,39 @@ void drawMaze(Texture& atlas,vector<vector<cell>> mazegrid,Vector2 offset,Vector
         continue;
       }
       // draw the correct texture in the current place with the correct rotation
-      DrawTexturePro(atlas,(Rectangle){float(mazegrid[i][j].textureIndex)*inputScale.x,0,inputScale.x,inputScale.y},(Rectangle){offset.x + outputScale.x/2 + float(j%mazegrid[0].size())*outputScale.x,offset.y + outputScale.y/2
-+ (float(i)*outputScale.y),outputScale.x,outputScale.y},(Vector2){outputScale.x/2,outputScale.y/2},float(mazegrid[i][j].textureRotation)*90,WHITE);
+      DrawTexturePro
+      (
+        atlas,
+        (Rectangle)
+        {
+          float(mazegrid[i][j].textureIndex)*inputScale.x,
+          0,
+          inputScale.x,
+          inputScale.y
+        }, // specifies the location and size of input image
+        (Rectangle)
+        {
+          offset.x + outputScale.x/2 + float(j%mazegrid[0].size())*outputScale.x,
+          offset.y + outputScale.y/2 + (float(i)*outputScale.y),
+          outputScale.x,
+          outputScale.y
+        },
+        (Vector2){outputScale.x/2,outputScale.y/2},
+        float(mazegrid[i][j].textureRotation)*90,
+        WHITE
+      );
+
+      DrawRectangleRec
+      (
+        (Rectangle)
+        {
+          offset.x + float(j%mazegrid[0].size())*outputScale.x,
+          offset.y + (float(i)*outputScale.y),
+          outputScale.x,
+          outputScale.y
+        },Color{0,0,250,155}
+      );
+      
     }
   }
 }

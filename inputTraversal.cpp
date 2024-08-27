@@ -173,8 +173,8 @@ int main()
   SetTargetFPS(60);
   while(!IsWindowReady()){}
   
-  //Texture atlas = LoadTexture("randompatternpng.png");
-  Texture atlas = LoadTexture("textures/mazebluetheme.png");
+  Texture atlas = LoadTexture("textures/randompatternpng.png");
+  //Texture atlas = LoadTexture("textures/mazebluetheme.png");
   //Texture atlas = LoadTexture("textures/shrunken.png");
   //Texture atlas = LoadTexture("mazetemplate.png");
   //Rectangle spriteRect = {0, 0, 128, 128 };
@@ -554,8 +554,6 @@ int main()
         {
           // drawing a ghost block where the cursor is at
           DrawRectangle(mazeOffset.x + mousePos.x,mazeOffset.y + mousePos.y,outputScale.x,outputScale.y,YELLOW);
-          //DrawRectangle(mazeOffset.x + mousePos.x + outputScale.x/4,mazeOffset.y + mousePos.y + outputScale.y/4,outputScale.x/2,outputScale.y/2,PURPLE);
-          
 
           // making sure nothing is being dragged already before we set a status
           // so we check both the front and end node locations in comparison to the mouse location
@@ -721,8 +719,6 @@ int main()
             //DrawRectangle(mazeOffset.x + endingX * outputScale.x,mazeOffset.y + endingY * outputScale.y,outputScale.x,outputScale.y,ORANGE);
             draggingMarker[1] = false;
           }
-          // check if we need to update the marker location, or if we should leave the marker where it is already at
-
         }
         //DrawRectangle(mazeOffset.x + ((mousePos.x - mazeOffset.x)/ ((int)mazeSize.x * outputScale.x)),0,20,20,GREEN);
         //bool draggingMarker[2]{false,false}; // represents the movement state of each marker in the end after the maze has been generated and it finds the shortest path between two markers
