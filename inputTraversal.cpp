@@ -631,13 +631,12 @@ int main()
             check if the position is valid, if it is, then update the origin and draw from the current location
 */
 
-          // current issue is that updating solvedMaze = false, does not make it regenerate the shortest path
-
             // updating the markers since we are no longer dragging them
           if(draggingMarker[0])
           {
             if(!(mousePosCell.x == endingX && mousePosCell.y == endingY))
             {
+              //mazePath.mazeDone = false;
               startingX = mousePosCell.x;
               startingY = mousePosCell.y;
               shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
