@@ -132,8 +132,8 @@ void saveMaze(vector<vector<cell>>& board, std::string fileName,int startingX, i
       writingFile << currentCell << "\n";
     }
   }
-  writingFile << startingX << startingY << "\n";
-  writingFile << endingX << endingY << "\n";
+  writingFile << startingX << " " << startingY << "\n";
+  writingFile << endingX   << " " << endingY   << "\n";
 
   writingFile.close();
 }

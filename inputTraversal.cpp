@@ -367,8 +367,7 @@ int main()
       std::string fileName;
       std::cin >> fileName;
       fileName += ".txt";
-      //saveMaze(mazePath.currentBoard,fileName);
-      saveMaze(mazePath.currentBoard,"testFile.txt",startingX, startingY, endingX, endingY);
+      saveMaze(mazePath.currentBoard,fileName,startingX, startingY, endingX, endingY);
       cout << "Saving maze as: " << fileName << "\n";
     }
     BeginDrawing();
