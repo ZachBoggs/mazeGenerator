@@ -7,6 +7,7 @@
 #include "raylib.h"
 #include "cell.h"
 #include <math.h>
+#include <fstream>
 
 using std::stack;
 using std::vector;
@@ -110,6 +111,31 @@ void clearTraversal(vector<vector<cell>>& board)
       referenceCell.searched = false;
     }
   }
+}
+
+void saveMaze(vector<vector<cell>>& board, std::string fileName,int startingX, int startingY,int endingX, int endingY)
+{
+  int mazeWidth  = board[0].size();
+  int mazeHeight = board.size();
+
+  std::string fileDir = "mazes/";
+  fileDir += fileName;
+
+  std::ofstream writingFile(fileDir);
+
+  writingFile << mazeWidth << " " << mazeHeight << "\n";
+
+  for(vector<cell>& row : board)
+  {
+    for(cell& currentCell : row)
+    {
+      writingFile << currentCell << "\n";
+    }
+  }
+  writingFile << startingX << startingY << "\n";
+  writingFile << endingX << endingY << "\n";
+
+  writingFile.close();
 }
 
 
