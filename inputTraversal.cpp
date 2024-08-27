@@ -216,7 +216,7 @@ int main()
   //mazePath.rootStack.pop();
   updateTextures(mazePath.currentBoard);
   
-  bool debugMode = true; // displays debug information
+  bool debugMode = false; // displays debug information
   bool paused = false;
   bool showBackend = true; // displays where the wandering segment is and its current path
   // allows the user to control how the wandering segment moves
@@ -407,9 +407,11 @@ int main()
           //randomely generate coordinates for a starting point and an end point
           startingY = randomNumber(0,mazePath.currentBoard.size()-1);
           startingX = randomNumber(0,mazePath.currentBoard[0].size()-1);
-
-          endingY = randomNumber(0,mazePath.currentBoard.size()-1);
-          endingX = randomNumber(0,mazePath.currentBoard[0].size()-1);
+          while(endingX == startingX && endingY == startingY)
+          {
+            endingY = randomNumber(0,mazePath.currentBoard.size());
+            endingX = randomNumber(0,mazePath.currentBoard[0].size());
+          }
 
 
           //mazePath.currentBoard[endingY][mazePath.currentBoard[0].size()-1].goalCell = true;
