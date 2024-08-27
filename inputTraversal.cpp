@@ -87,7 +87,7 @@ stack<Vector2> depthFirstSearch(vector<vector<cell>>& currentBoard,Vector2 curre
   if(currentBoard[currentCoords.y][currentCoords.x].connections[1])
   {
     //cout << "going right\n";
-    DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
+    //DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
     currentStack = depthFirstSearch(currentBoard,{currentCoords.x+1,currentCoords.y});
     if((currentStack.size() < shortestStack.size() && currentStack.size() != 0) || shortestStack.size() == 0)
     {
@@ -97,7 +97,7 @@ stack<Vector2> depthFirstSearch(vector<vector<cell>>& currentBoard,Vector2 curre
   if(currentBoard[currentCoords.y][currentCoords.x].connections[0])
   {
     //cout << "going up\n";
-    DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
+    //DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
     currentStack = depthFirstSearch(currentBoard,{currentCoords.x,currentCoords.y-1});
 
     if((currentStack.size() < shortestStack.size() && currentStack.size() != 0) || shortestStack.size() == 0)
@@ -108,7 +108,7 @@ stack<Vector2> depthFirstSearch(vector<vector<cell>>& currentBoard,Vector2 curre
   if(currentBoard[currentCoords.y][currentCoords.x].connections[2])
   {
     //cout << "going down\n";
-    DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
+    //DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
     currentStack = depthFirstSearch(currentBoard,{currentCoords.x,currentCoords.y+1});
     if((currentStack.size() < shortestStack.size() && currentStack.size() != 0) || shortestStack.size() == 0)
     {
@@ -118,7 +118,7 @@ stack<Vector2> depthFirstSearch(vector<vector<cell>>& currentBoard,Vector2 curre
   if(currentBoard[currentCoords.y][currentCoords.x].connections[3])
   {
     //cout << "going left\n";
-    DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
+    //DrawRectangle(128+currentCoords.x*40,128+currentCoords.y*40,40,40,YELLOW);
     currentStack = depthFirstSearch(currentBoard,{currentCoords.x-1,currentCoords.y});
     if((currentStack.size() < shortestStack.size() && currentStack.size() != 0) || shortestStack.size() == 0)
     {
@@ -567,6 +567,7 @@ int main()
           // drawing a ghost block where the cursor is at
           DrawRectangle(mazeOffset.x + mousePos.x,mazeOffset.y + mousePos.y,outputScale.x,outputScale.y,YELLOW);
           DrawRectangle(mazeOffset.x + mousePos.x + outputScale.x/4,mazeOffset.y + mousePos.y + outputScale.y/4,outputScale.x/2,outputScale.y/2,PURPLE);
+          
 
           // making sure nothing is being dragged already before we set a status
           // so we check both the front and end node locations in comparison to the mouse location
@@ -590,10 +591,60 @@ int main()
 
           }else if(draggingMarker[0])
           {
-            DrawRectangle(mazeOffset.x + startingX * outputScale.x,mazeOffset.y + startingY * outputScale.y,outputScale.x,outputScale.y,RED);
+            if(!(endingX == mousePosCell.x && endingY == mousePosCell.y))
+            {
+              startingX = mousePosCell.x;
+              startingY = mousePosCell.y;
+
+              //shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
+
+              //we may need to reset all of the cells to remove the old path
+              clearTraversal(mazePath.currentBoard);
+              mazePath.currentBoard[endingY][endingX].goalCell = true;
+
+              // finding the shortest path from the start to the finish
+              stack<Vector2> shortestStack = depthFirstSearch(mazePath.currentBoard,{(float)startingX,(float)startingY});
+
+              // resetting the shortest path and adding the path information to it
+              shortestPath = {};
+             
+              while(!shortestStack.empty())
+              {
+                shortestPath.push_back(shortestStack.top());
+                shortestStack.pop();
+              }
+              mazePath.mazeDone = true;
+            }
+
+            //DrawRectangle(mazeOffset.x + startingX * outputScale.x,mazeOffset.y + startingY * outputScale.y,outputScale.x,outputScale.y,RED);
           }else if(draggingMarker[1])
           {
-            DrawRectangle(mazeOffset.x + endingX * outputScale.x,mazeOffset.y + endingY * outputScale.y,outputScale.x,outputScale.y,RED);
+            
+            if(!(startingX == mousePosCell.x && startingY == mousePosCell.y))
+            {
+              endingX = mousePosCell.x;
+              endingY = mousePosCell.y;
+
+              //shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
+
+              //we may need to reset all of the cells to remove the old path
+              clearTraversal(mazePath.currentBoard);
+              mazePath.currentBoard[endingY][endingX].goalCell = true;
+
+              // finding the shortest path from the start to the finish
+              stack<Vector2> shortestStack = depthFirstSearch(mazePath.currentBoard,{(float)startingX,(float)startingY});
+
+              // resetting the shortest path and adding the path information to it
+              shortestPath = {};
+             
+              while(!shortestStack.empty())
+              {
+                shortestPath.push_back(shortestStack.top());
+                shortestStack.pop();
+              }
+              mazePath.mazeDone = true;
+            }
+            //DrawRectangle(mazeOffset.x + endingX * outputScale.x,mazeOffset.y + endingY * outputScale.y,outputScale.x,outputScale.y,RED);
           }
           // setting initial click position
 
@@ -646,6 +697,7 @@ int main()
                 shortestPath.push_back(shortestStack.top());
                 shortestStack.pop();
               }
+              mazePath.mazeDone = true;
 
               //cout << "shortest path found!\n";
             }
@@ -674,6 +726,7 @@ int main()
                 shortestPath.push_back(shortestStack.top());
                 shortestStack.pop();
               }
+              mazePath.mazeDone = true;
               
               //shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
             }
