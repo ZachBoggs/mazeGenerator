@@ -619,17 +619,6 @@ int main()
             */
 
 
-          /*
-            have an array of size 2 or a vector of 2 that you get from a functiont that returns the coordinates of what cell the mouse is currently at
-            this function would also accomodate for if the mouse is off the screen to the right, left, above and or below
-            
-            have another function that can take the cell coordinate and give you the pixel location of where that would be at in the maze
-
-            update the stored location for the marker
-            have it so if a marker is being dragged, that is where the path generation is coming from, (the current location the mouse is at ) as long as it does not cover another marker on that tile
-
-            check if the position is valid, if it is, then update the origin and draw from the current location
-*/
 
             // updating the markers since we are no longer dragging them
           if(draggingMarker[0])
@@ -637,11 +626,10 @@ int main()
             if(!(mousePosCell.x == endingX && mousePosCell.y == endingY))
             {
               
-              //mazePath.mazeDone = false;
               startingX = mousePosCell.x;
               startingY = mousePosCell.y;
-              shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
-              //solvedMaze = false;
+
+              //shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
 
               //we may need to reset all of the cells to remove the old path
               clearTraversal(mazePath.currentBoard);
@@ -649,8 +637,6 @@ int main()
 
               // finding the shortest path from the start to the finish
               stack<Vector2> shortestStack = depthFirstSearch(mazePath.currentBoard,{(float)startingX,(float)startingY});
-
-              cout << "shortestStack size: " << shortestStack.size() << "\n";
 
               // resetting the shortest path and adding the path information to it
               shortestPath = {};
@@ -660,8 +646,8 @@ int main()
                 shortestPath.push_back(shortestStack.top());
                 shortestStack.pop();
               }
-              cout << "shortest path found!\n";
-              solvedMaze = true;
+
+              //cout << "shortest path found!\n";
             }
 
             //DrawRectangle(mazeOffset.x + startingX * outputScale.x,mazeOffset.y + startingY * outputScale.y,outputScale.x,outputScale.y,ORANGE);
@@ -672,9 +658,24 @@ int main()
             {
               endingX = mousePosCell.x;
               endingY = mousePosCell.y;
+
+              //we may need to reset all of the cells to remove the old path
+              clearTraversal(mazePath.currentBoard);
+              mazePath.currentBoard[endingY][endingX].goalCell = true;
+
+              // finding the shortest path from the start to the finish
+              stack<Vector2> shortestStack = depthFirstSearch(mazePath.currentBoard,{(float)startingX,(float)startingY});
+
+              // resetting the shortest path and adding the path information to it
+              shortestPath = {};
+             
+              while(!shortestStack.empty())
+              {
+                shortestPath.push_back(shortestStack.top());
+                shortestStack.pop();
+              }
               
               //shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
-              solvedMaze = false;
             }
             //DrawRectangle(mazeOffset.x + endingX * outputScale.x,mazeOffset.y + endingY * outputScale.y,outputScale.x,outputScale.y,ORANGE);
             draggingMarker[1] = false;
