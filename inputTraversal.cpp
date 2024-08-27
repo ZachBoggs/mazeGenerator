@@ -241,6 +241,12 @@ int main()
     if(IsKeyPressed(KEY_B)) { showBackend = !showBackend; }
     if(IsKeyPressed(KEY_D)) { debugMode   = !debugMode;   }
     if(IsKeyPressed(KEY_F)) { fuzzyEffect = !fuzzyEffect; }
+    if(IsKeyPressed(KEY_M)) { manualMode = !manualMode; }
+
+    // checking if the user is changing the current seed
+    if(IsKeyPressed(KEY_J)) { currentSeed--; }
+    if(IsKeyPressed(KEY_K)) { currentSeed++; }
+
 
     if(IsKeyPressed(KEY_R))
     {
@@ -264,25 +270,12 @@ int main()
       while(!mazePath.currentPath.empty()) { mazePath.currentPath.pop(); }
 
       mazegrid = blankMaze(mazeSize.x,mazeSize.y);
-      //updateTextures(mazegrid);
       srand(currentSeed);
       mazePath = traveler(mazegrid);
       //mazePath.rootStack = generateRandomCoordList(mazeSize);
       updateTextures(mazePath.currentBoard);
     }
 
-    if(IsKeyPressed(KEY_M))
-    {
-
-      manualMode = !manualMode;
-    }
-    if(IsKeyPressed(KEY_J))
-    {
-      currentSeed--;
-    }else if(IsKeyPressed(KEY_K))
-    {
-      currentSeed++;
-    }
 
     // if we are not in manual mode and we press any of these keys 
     // then we adjust the size of the maze accordingly
@@ -314,10 +307,10 @@ int main()
     {
       
       /*
-        if our maze has not been fully generated yet then we want to
-          check if we are manually moving 
-          or 
-          if we want to get a random direction to move to
+       * if our maze has not been fully generated yet then we want to
+       *  check if we are manually moving 
+       *  or 
+       *  if we want to get a random direction to move to
       */
       if(!mazePath.mazeDone)
       {
@@ -357,7 +350,6 @@ int main()
     }else
     {
       DrawText("Paused",windowSize.x-200,50,50,BLACK);
-
     }
 
     if(IsKeyPressed(KEY_S))
@@ -562,7 +554,7 @@ int main()
         {
           // drawing a ghost block where the cursor is at
           DrawRectangle(mazeOffset.x + mousePos.x,mazeOffset.y + mousePos.y,outputScale.x,outputScale.y,YELLOW);
-          DrawRectangle(mazeOffset.x + mousePos.x + outputScale.x/4,mazeOffset.y + mousePos.y + outputScale.y/4,outputScale.x/2,outputScale.y/2,PURPLE);
+          //DrawRectangle(mazeOffset.x + mousePos.x + outputScale.x/4,mazeOffset.y + mousePos.y + outputScale.y/4,outputScale.x/2,outputScale.y/2,PURPLE);
           
 
           // making sure nothing is being dragged already before we set a status
