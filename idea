@@ -1,0 +1,4 @@
+have it so the user can hand draw the maze or choose to generate a random maze
+then the user can find the shortest paths between two points
+
+have a way to load in a custom maze from a file?
