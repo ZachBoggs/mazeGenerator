@@ -636,18 +636,21 @@ int main()
           {
             if(!(mousePosCell.x == endingX && mousePosCell.y == endingY))
             {
+              
               //mazePath.mazeDone = false;
               startingX = mousePosCell.x;
               startingY = mousePosCell.y;
               shortestPath = vector<Vector2>(); // empty the shortest path variable so it doesn't show previous solutions
               //solvedMaze = false;
 
-              mazePath.currentBoard[endingY][endingX].goalCell = true;
-
               //we may need to reset all of the cells to remove the old path
               clearTraversal(mazePath.currentBoard);
+              mazePath.currentBoard[endingY][endingX].goalCell = true;
+
               // finding the shortest path from the start to the finish
               stack<Vector2> shortestStack = depthFirstSearch(mazePath.currentBoard,{(float)startingX,(float)startingY});
+
+              cout << "shortestStack size: " << shortestStack.size() << "\n";
 
               // resetting the shortest path and adding the path information to it
               shortestPath = {};
@@ -658,6 +661,7 @@ int main()
                 shortestStack.pop();
               }
               cout << "shortest path found!\n";
+              solvedMaze = true;
             }
 
             //DrawRectangle(mazeOffset.x + startingX * outputScale.x,mazeOffset.y + startingY * outputScale.y,outputScale.x,outputScale.y,ORANGE);

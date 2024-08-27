@@ -105,7 +105,8 @@ void clearTraversal(vector<vector<cell>>& board)
   {
     for(cell& referenceCell : row)
     {
-      referenceCell.isTraversed = false;
+      //referenceCell.isTraversed = false;
+      referenceCell.searched = false;
     }
   }
 }
