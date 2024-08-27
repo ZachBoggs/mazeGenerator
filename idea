@@ -2,3 +2,14 @@ have it so the user can hand draw the maze or choose to generate a random maze
 then the user can find the shortest paths between two points
 
 have a way to load in a custom maze from a file?
+
+load data from a file too
+
+when saving, get the file name that the user wants to save to
+
+saving:
+ - in the process of saving, we want to implement a method or <<operator with the cells to get the data for each cell that needs to be printed out similar to: 0 0 1 0 for the side connections
+ - at the end of the file, save the marker locations?
+
+
+
