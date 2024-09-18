@@ -1,3 +1,5 @@
+set up cmake so then I can work with cross platform
+
 have it so the user can hand draw the maze or choose to generate a random maze
 then the user can find the shortest paths between two points
 
@@ -10,6 +12,12 @@ when saving, get the file name that the user wants to save to
 saving:
  - in the process of saving, we want to implement a method or <<operator with the cells to get the data for each cell that needs to be printed out similar to: 0 0 1 0 for the side connections
  - at the end of the file, save the marker locations?
+
+
+make it so the maze can do rainbow?
+
+
+have a way to call a text box function on a seperate thread so that way I can keep checking if we have received our reseults from the user yet, we return after the user has entered the enter key
 
 
 
