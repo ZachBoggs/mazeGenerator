@@ -173,8 +173,8 @@ int main()
   SetTargetFPS(60);
   while(!IsWindowReady()){}
   
-  Texture atlas = LoadTexture("textures/randompatternpng.png");
-  //Texture atlas = LoadTexture("textures/mazebluetheme.png");
+  //Texture atlas = LoadTexture("textures/randompatternpng.png");
+  Texture atlas = LoadTexture("textures/mazebluetheme.png");
   //Texture atlas = LoadTexture("textures/shrunken.png");
   //Texture atlas = LoadTexture("mazetemplate.png");
   //Rectangle spriteRect = {0, 0, 128, 128 };
@@ -741,5 +741,10 @@ int main()
 
   return 0;
 }
+
+
+here
+
+
 
 

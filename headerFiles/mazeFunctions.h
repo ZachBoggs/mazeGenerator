@@ -66,7 +66,8 @@ void drawMaze(Texture& atlas,vector<vector<cell>> mazegrid,Vector2 offset,Vector
           offset.y + (float(i)*outputScale.y),
           outputScale.x,
           outputScale.y
-        },Color{0,0,250,155}
+        //},Color{0,0,250,155}
+        },Color{0,0,250,0}
       );
       
     }

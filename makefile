@@ -6,7 +6,6 @@ lib = ./lib/
 all: main
 
 
-
 textureTest: spriteReader.cpp
 	$(cc) $(flags) spriteReader.cpp $(lib)libraylib.a
 
