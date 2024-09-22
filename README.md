@@ -15,19 +15,19 @@ Some more details on Wilsons algorithm can be found here:
     Starting with an empty x wide by y tall grid, we have a wandering path from at a point a. The wandering path wanders until it connects with a placed point b. In the case that it connects to a placed path, it takes its path that it took from point a to b and places that path. We then get a new point a that hasn't been occupied yet and repeat the same process. In the case that the wandering path contacts the wandering path from point a, the wandering path breaks all the way to that contact point and continues wandering from that point.
 </p>
 
-![Maze generation process clip](./resources/MazeGenSlowed.gif "Maze generation process")
+![Maze generation process clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/MazeGenSlowed.gif?raw=true "Maze generation process")
 
 <p>
     Below is an example of the same process above but at 1000x speed and on a much larger scale! Each time that you can see the path update the random walkder has stepped one thousand times! Notice that after the maze has been generated that dragging the path nodes has a slight delay before it displays the shortest path!
 <p>
 
-![Maze generation process clip](./resources/MazeGeneratorSampleVideo.gif "Maze generation process")
+![Maze generation process clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/MazeGeneratorSampleVideo.gif?raw=true "Maze generation process")
 
 ## <b>Shortest path navigation:</b>
 
 Here is an example of moving around the nodes and the maze displaying the shortest path between those two nodes in real time.
 
- ![Maze Solving clip](./resources/MazeGeneratorSolver.gif "Maze solving process")
+ ![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/MazeGeneratorSolver.gif?raw=true "Maze solving process")
 
 ---
 ## Grid breakdown:
@@ -54,7 +54,7 @@ In the above variables, take note that there is a relationship between isRoot an
 
 Regarding two of the variables that is stored in a cell called textureIndex and textureRotation. The textureIndex tells the program which texture we want going from left toright starting at 0 on the template below. The textureRotation is important because it takes the texture at the given textureIndex location and places it in the grid at thecells location matching the connections to the cells around it.
 
- ![Cell template](./resources/mazetemplate.png "Blank cell template")
+ ![Cell template](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/mazeTemplate.png?raw=true "Blank cell template")
 
  ---
 
@@ -62,16 +62,16 @@ Regarding two of the variables that is stored in a cell called textureIndex and 
 
 I chose to have a template which represents all of the possible cell connection cases to be able to load in my own custom textures for the maze such as the one below:
 
- ![Colored cell template](./resources/mazebluetheme.png "Colored cell template")
+ ![Colored cell template](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/mazeBlueTheme.png?raw=true "Colored cell template")
 
 ---
 
 Program running slowly:
-![Maze Solving clip](./resources/MazeGenStepByStep.gif "Maze solving process")
+![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/MazeGenStepByStep.gif?raw=true "Maze solving process")
 ---
 <br>
 
 ## Photo gallery:
-![Maze Solving clip](./resources/samplePhoto1.png "Maze solving process")
-![Maze Solving clip](./resources/samplePhoto2.png "Maze solving process")
-![Maze Solving clip](./resources/samplePhoto3.png "Maze solving process")
+![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto1.png?raw=true "Maze solving process")
+![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto2.png?raw=true "Maze solving process")
+![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto3.png?raw=true "Maze solving process")
