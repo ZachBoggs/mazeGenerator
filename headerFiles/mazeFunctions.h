@@ -7,6 +7,7 @@
 #include "raylib.h"
 #include "cell.h"
 #include <math.h>
+#include <fstream>
 
 using std::stack;
 using std::vector;
@@ -35,8 +36,40 @@ void drawMaze(Texture& atlas,vector<vector<cell>> mazegrid,Vector2 offset,Vector
         continue;
       }
       // draw the correct texture in the current place with the correct rotation
-      DrawTexturePro(atlas,(Rectangle){float(mazegrid[i][j].textureIndex)*inputScale.x,0,inputScale.x,inputScale.y},(Rectangle){offset.x + outputScale.x/2 + float(j%mazegrid[0].size())*outputScale.x,offset.y + outputScale.y/2
-+ (float(i)*outputScale.y),outputScale.x,outputScale.y},(Vector2){outputScale.x/2,outputScale.y/2},float(mazegrid[i][j].textureRotation)*90,WHITE);
+      DrawTexturePro
+      (
+        atlas,
+        (Rectangle)
+        {
+          float(mazegrid[i][j].textureIndex)*inputScale.x,
+          0,
+          inputScale.x,
+          inputScale.y
+        }, // specifies the location and size of input image
+        (Rectangle)
+        {
+          offset.x + outputScale.x/2 + float(j%mazegrid[0].size())*outputScale.x,
+          offset.y + outputScale.y/2 + (float(i)*outputScale.y),
+          outputScale.x,
+          outputScale.y
+        },
+        (Vector2){outputScale.x/2,outputScale.y/2},
+        float(mazegrid[i][j].textureRotation)*90,
+        WHITE
+      );
+
+      DrawRectangleRec
+      (
+        (Rectangle)
+        {
+          offset.x + float(j%mazegrid[0].size())*outputScale.x,
+          offset.y + (float(i)*outputScale.y),
+          outputScale.x,
+          outputScale.y
+        //},Color{0,0,250,155}
+        },Color{0,0,250,0}
+      );
+      
     }
   }
 }
@@ -110,6 +143,31 @@ void clearTraversal(vector<vector<cell>>& board)
       referenceCell.searched = false;
     }
   }
+}
+
+void saveMaze(vector<vector<cell>>& board, std::string fileName,int startingX, int startingY,int endingX, int endingY)
+{
+  int mazeWidth  = board[0].size();
+  int mazeHeight = board.size();
+
+  std::string fileDir = "mazes/";
+  fileDir += fileName;
+
+  std::ofstream writingFile(fileDir);
+
+  writingFile << mazeWidth << " " << mazeHeight << "\n";
+
+  for(vector<cell>& row : board)
+  {
+    for(cell& currentCell : row)
+    {
+      writingFile << currentCell << "\n";
+    }
+  }
+  writingFile << startingX << " " << startingY << "\n";
+  writingFile << endingX   << " " << endingY   << "\n";
+
+  writingFile.close();
 }
 
 

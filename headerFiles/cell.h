@@ -2,15 +2,18 @@
 #define CELL_H
 
 #include "raylib.h"
+#include <iostream>
+
+using std::ostream;
 
 struct cell
 {
-  bool isPlaced = false;
-  bool isTraversed = false;
-  bool isRoot = false;
+  bool isPlaced     = false;
+  bool isTraversed  = false;
+  bool isRoot       = false;
   bool connections[4]{false};
-  bool searched = false; // used for the solving algorithm
-  bool goalCell = false;
+  bool searched     = false; // used for the solving algorithm
+  bool goalCell     = false;
 
   Vector2 currentPos;  
 
@@ -24,6 +27,14 @@ struct cell
   cell(Vector2 newPos)
     : currentPos(newPos)
   {
+  }
+
+  cell(bool connectionPoints[4])
+  {
+    for(int i=0;i<4;++i)
+    {
+      connections[i] = connectionPoints[i];
+    }
   }
 
   cell(int textInd,int rotInd)
@@ -112,6 +123,19 @@ struct cell
 
     }
   }
+
+
+  friend ostream& operator<<(ostream& os, const cell& rhs)
+  {
+    for(bool connection : rhs.connections)
+    {
+      os << connection << " ";
+    }
+
+    return os;
+  }
+
+
 
 };
 

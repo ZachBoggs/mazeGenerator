@@ -14,14 +14,11 @@ using std::cout;
 using std::string;
 using std::to_string;
 
-
-
-
+bool fuzzyEffect = true;
 
 void drawCellDetails(vector<vector<cell>>& mazegrid)
 {
   Vector2 squareDimensions{float(10),float(10)};
-  bool fuzzyEffect = true;
   Vector2 fuzzy = fuzzyEffect ? Vector2{20,20} : squareDimensions;
 
   for(int i=0;i<mazegrid.size();++i)
@@ -176,7 +173,7 @@ int main()
   SetTargetFPS(60);
   while(!IsWindowReady()){}
   
-  //Texture atlas = LoadTexture("randompatternpng.png");
+  //Texture atlas = LoadTexture("textures/randompatternpng.png");
   Texture atlas = LoadTexture("textures/mazebluetheme.png");
   //Texture atlas = LoadTexture("textures/shrunken.png");
   //Texture atlas = LoadTexture("mazetemplate.png");
@@ -243,6 +240,13 @@ int main()
     if(IsKeyPressed(KEY_P)) { paused      = !paused;      }
     if(IsKeyPressed(KEY_B)) { showBackend = !showBackend; }
     if(IsKeyPressed(KEY_D)) { debugMode   = !debugMode;   }
+    if(IsKeyPressed(KEY_F)) { fuzzyEffect = !fuzzyEffect; }
+    if(IsKeyPressed(KEY_M)) { manualMode = !manualMode; }
+
+    // checking if the user is changing the current seed
+    if(IsKeyPressed(KEY_J)) { currentSeed--; }
+    if(IsKeyPressed(KEY_K)) { currentSeed++; }
+
 
     if(IsKeyPressed(KEY_R))
     {
@@ -266,36 +270,15 @@ int main()
       while(!mazePath.currentPath.empty()) { mazePath.currentPath.pop(); }
 
       mazegrid = blankMaze(mazeSize.x,mazeSize.y);
-      //updateTextures(mazegrid);
       srand(currentSeed);
       mazePath = traveler(mazegrid);
       //mazePath.rootStack = generateRandomCoordList(mazeSize);
-      //mazePath.goToNextRoot();
-      //mazePath.currentBoard[mazePath.rootStack.top().y][mazePath.rootStack.top().x].isPlaced = true;
-      //mazePath.rootStack.pop();
       updateTextures(mazePath.currentBoard);
-      //mazePath.mazeDone = false;
-      /*
-      // solving for the shortest path in between frames
-      while(!mazePath.currentPath.empty())
-      {
-        mazePath.currentPath.pop();
-      }
-      */
     }
 
-    if(IsKeyPressed(KEY_M))
-    {
-      manualMode = !manualMode;
-    }
-    if(IsKeyPressed(KEY_J))
-    {
-      currentSeed--;
-    }else if(IsKeyPressed(KEY_K))
-    {
-      currentSeed++;
-    }
 
+    // if we are not in manual mode and we press any of these keys 
+    // then we adjust the size of the maze accordingly
     if(!manualMode)
     {
       if(IsKeyPressed(KEY_UP) || (IsKeyDown(KEY_UP) && IsKeyDown(KEY_LEFT_SHIFT)))
@@ -322,8 +305,18 @@ int main()
 
     if(!paused)
     {
+      
+      /*
+       * if our maze has not been fully generated yet then we want to
+       *  check if we are manually moving 
+       *  or 
+       *  if we want to get a random direction to move to
+      */
+      if(!mazePath.mazeDone)
+      {
         int direction = -1;
-        if(!manualMode && !mazePath.mazeDone)
+
+        if(!manualMode)
         {
           for(int m=0;m<1000;++m)
           {
@@ -337,50 +330,43 @@ int main()
         }else
         {
           // if the maze has not been generated yet, then we set the direction and update the grid
-          if(!mazePath.mazeDone)
+          if(IsKeyPressed(KEY_UP) || (IsKeyDown(KEY_UP) && IsKeyDown(KEY_LEFT_SHIFT))) 
           {
-            if(IsKeyPressed(KEY_UP) || (IsKeyDown(KEY_UP) && IsKeyDown(KEY_LEFT_SHIFT))) 
-            {
-              //cout << "^\n";
-              direction = 0;
-              
-            }else if(IsKeyPressed(KEY_RIGHT) || (IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT_SHIFT)))
-            {
-              //cout << ">\n";
-              direction = 1;
-              
-            }else if(IsKeyPressed(KEY_LEFT) || (IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_LEFT_SHIFT)))
-            {
-              //cout << "<\n";
-              direction = 2;
-              
-            }else if(IsKeyPressed(KEY_DOWN) || (IsKeyDown(KEY_DOWN) && IsKeyDown(KEY_LEFT_SHIFT)))
-            {
-              //cout << "\\/\n";
-              direction = 3;
-              
-            }else if(IsKeyPressed(KEY_S))
-            {
-              cout << "placing path because s was pressed!\n";
-              cout << "path empty: " << mazePath.currentPath.empty() << "\n";
-              cout << "path size: " << mazePath.currentPath.size() << "\n";
-              mazePath.placePath();
-              updateTextures(mazePath.currentBoard);
-            }
-
-            movePath(direction, mazePath);
+            direction = 0;
+          }else if(IsKeyPressed(KEY_RIGHT) || (IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_LEFT_SHIFT)))
+          {
+            direction = 1;
+          }else if(IsKeyPressed(KEY_LEFT) || (IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_LEFT_SHIFT)))
+          {
+            direction = 2;
+          }else if(IsKeyPressed(KEY_DOWN) || (IsKeyDown(KEY_DOWN) && IsKeyDown(KEY_LEFT_SHIFT)))
+          {
+            direction = 3;
           }
+
+          movePath(direction, mazePath);
         }
+      }
     }else
     {
       DrawText("Paused",windowSize.x-200,50,50,BLACK);
-
     }
-    
+
+    if(IsKeyPressed(KEY_S))
+    {
+      cout << "Saving maze!\n";
+      cout << "What would you like the file to be called: ";
+      std::string fileName;
+      std::cin >> fileName;
+      fileName += ".txt";
+      saveMaze(mazePath.currentBoard,fileName,startingX, startingY, endingX, endingY);
+      cout << "Saving maze as: " << fileName << "\n";
+    }
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
     /*
+     * drawing our textures from the atlas
     for(int i=0;i<atlas.width/128;++i)
     {
       DrawTexturePro(atlas,(Rectangle){i*128,0,128,128},(Rectangle){(i%4)*170,((i/4)*170),128,128},(Vector2){0,0},0,WHITE);
@@ -568,8 +554,6 @@ int main()
         {
           // drawing a ghost block where the cursor is at
           DrawRectangle(mazeOffset.x + mousePos.x,mazeOffset.y + mousePos.y,outputScale.x,outputScale.y,YELLOW);
-          DrawRectangle(mazeOffset.x + mousePos.x + outputScale.x/4,mazeOffset.y + mousePos.y + outputScale.y/4,outputScale.x/2,outputScale.y/2,PURPLE);
-          
 
           // making sure nothing is being dragged already before we set a status
           // so we check both the front and end node locations in comparison to the mouse location
@@ -735,8 +719,6 @@ int main()
             //DrawRectangle(mazeOffset.x + endingX * outputScale.x,mazeOffset.y + endingY * outputScale.y,outputScale.x,outputScale.y,ORANGE);
             draggingMarker[1] = false;
           }
-          // check if we need to update the marker location, or if we should leave the marker where it is already at
-
         }
         //DrawRectangle(mazeOffset.x + ((mousePos.x - mazeOffset.x)/ ((int)mazeSize.x * outputScale.x)),0,20,20,GREEN);
         //bool draggingMarker[2]{false,false}; // represents the movement state of each marker in the end after the maze has been generated and it finds the shortest path between two markers
@@ -759,5 +741,10 @@ int main()
 
   return 0;
 }
+
+
+here
+
+
 
 
