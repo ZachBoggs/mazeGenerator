@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#include "headerFiles/raylib.h"
-#include "headerFiles/cell.h"
-#include "headerFiles/mazeFunctions.h"
-#include "headerFiles/mazeTraverser.h"
-#include "headerFiles/randomNum.h"
+#include "../headerFiles/raylib.h"
+#include "../headerFiles/cell.h"
+#include "../headerFiles/mazeFunctions.h"
+#include "../headerFiles/mazeTraverser.h"
+#include "../headerFiles/randomNum.h"
 
 //using namespace std;
 using std::vector;
