@@ -1,3 +1,5 @@
+[![compile code](https://github.com/ZachBoggs/mazeGenerator/actions/workflows/actions.yml/badge.svg)](https://github.com/ZachBoggs/mazeGenerator/actions/workflows/actions.yml)
+
 # Maze generator
 
 <p>
