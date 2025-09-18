@@ -77,3 +77,7 @@ Program running slowly:
 ![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto1.png?raw=true "Maze solving process")
 ![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto2.png?raw=true "Maze solving process")
 ![Maze Solving clip](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto3.png?raw=true "Maze solving process")
+
+## Built in debugging tool:
+![Debugging tool showcase](https://github.com/ZachBoggs/mazeGeneratorResources/blob/main/samplePhoto4.png?raw=true "Maze debugging tool")
+
