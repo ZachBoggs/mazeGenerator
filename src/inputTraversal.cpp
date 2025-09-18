@@ -11,6 +11,7 @@
 using std::vector;
 using std::stack;
 using std::cout;
+using std::endl;
 using std::string;
 using std::to_string;
 
@@ -21,9 +22,9 @@ void drawCellDetails(vector<vector<cell>>& mazegrid)
   Vector2 squareDimensions{float(10),float(10)};
   Vector2 fuzzy = fuzzyEffect ? Vector2{20,20} : squareDimensions;
 
-  for(int i=0;i<mazegrid.size();++i)
+  for(unsigned int i=0;i<mazegrid.size();++i)
   {
-    for(int j=0;j<mazegrid[0].size();++j)
+    for(unsigned int j=0;j<mazegrid[0].size();++j)
     {
       if(mazegrid[i][j].isRoot)
       {
@@ -199,16 +200,14 @@ int main()
     outputScale.y = outputScale.x;
   }
 
-  Rectangle spriteRect = {0, 0, inputScale.x, inputScale.y};
+  //Rectangle spriteRect = {0, 0, inputScale.x, inputScale.y};
 
   mazegrid = blankMaze(mazeSize.x,mazeSize.y);
   updateTextures(mazegrid);
   srand(currentSeed);
   traveler mazePath(mazegrid);
   //mazePath.rootStack = generateRandomCoordList(mazeSize);
-  //cout << "stack size after generation: " << mazePath.rootStack.size() << "\n";
   //mazePath.goToNextRoot();
-  cout << "stack size after first take: " << mazePath.rootStack.size() << "\n";
   //mazePath.currentBoard[mazePath.rootStack.top().y][mazePath.rootStack.top().x].isPlaced = true;
   //mazePath.rootStack.pop();
   updateTextures(mazePath.currentBoard);
@@ -220,16 +219,18 @@ int main()
   bool manualMode = false;
 
 // if the user is dragging the starting or end point, should the shortest path be updating while it is dragging or wait till the user releases the mouse button
-  bool smoothDrag = true; 
-  vector<Vector2> shortestPath;
-  int startingY;
-  int endingY;
-  int startingX;
-  int endingX;
-  bool solvedMaze = false;
-  Vector2 markerOrigin; // holds the location where the marker was before it was being dragged
 
-  bool adjustingMarkers(false);
+
+  //bool smoothDrag = true; 
+  vector<Vector2> shortestPath;
+  int startingY = 0;
+  int endingY = 0;
+  int startingX = 0;
+  int endingX = 0;
+  bool solvedMaze = false;
+  //Vector2 markerOrigin{-1.0f,-1.0f}; // holds the location where the marker was before it was being dragged
+
+  //bool adjustingMarkers(false);
   bool draggingMarker[2]{false,false}; // represents the movement state of each marker in the end after the maze has been generated and it finds the shortest path between two markers
 
   
@@ -422,7 +423,7 @@ int main()
       }else
       {
         // drawing the path that was given in scale of the maze
-        for(int i=0;i<shortestPath.size()-1;++i)
+        for(unsigned int i=0;i<shortestPath.size()-1;++i)
         {
           //DrawRectangle(shortestPath[i].x*40+128,shortestPath[i].y*40+128,40,40,Fade(PINK,.4));
           DrawLineEx({shortestPath[i].x*outputScale.x+mazeOffset.x+((float)outputScale.x/2),shortestPath[i].y*outputScale.y+mazeOffset.y+((float)outputScale.y/2)},{shortestPath[i+1].x*outputScale.x+mazeOffset.x+((float)outputScale.x/2),shortestPath[i+1].y*outputScale.y+mazeOffset.y+((float)outputScale.y/2)},5,PINK);
@@ -433,7 +434,8 @@ int main()
 
         if(debugMode)
         {
-          DrawRectangle(490,0,200,200,GRAY);
+          DrawRectangle(480,-10,320,220,BLACK);
+          DrawRectangle(490,0,300,200,Color{255,253,208,255});
           // printing the output scale to the screen so we can debug easier
           string scaleX = to_string(outputScale.x);
           string scaleY = to_string(outputScale.y);
@@ -446,8 +448,8 @@ int main()
 
 
           // printing out debug stats for the markers
-          string draggingStatus0 = "marker[0]: ";
-          string draggingStatus1 = "marker[1]: ";
+          string draggingStatus0 = "marker[0] dragging: ";
+          string draggingStatus1 = "marker[1] dragging: ";
 
           draggingStatus0 += draggingMarker[0] ? "true" : "false";
           draggingStatus1 += draggingMarker[1] ? "true" : "false";
@@ -563,16 +565,16 @@ int main()
             if(startingX == (int)mousePosCell.x && startingY == (int)mousePosCell.y)
             {
               draggingMarker[0] = true;
-              markerOrigin.x = startingX;
-              markerOrigin.y = startingY;
+              //markerOrigin.x = startingX;
+              //markerOrigin.y = startingY;
             }
 
             // if we are grabbing the 'ending' node
             if(endingX == ((int)mousePosCell.x) && endingY == ((int)mousePosCell.y))
             {
               draggingMarker[1] = true;
-              markerOrigin.x = endingX;
-              markerOrigin.y = endingY;
+              //markerOrigin.x = endingX;
+              //markerOrigin.y = endingY;
             }
 
           }else if(draggingMarker[0])
@@ -743,7 +745,6 @@ int main()
 }
 
 
-here
 
 
 

@@ -15,9 +15,9 @@ using std::vector;
 // udpating the textures for all of the cells in the maze based on their connections
 void updateTextures(vector<vector<cell>>& mazegrid)
 {
-  for(int i=0;i<mazegrid.size();++i)
+  for(unsigned int i=0;i<mazegrid.size();++i)
   {
-    for(int j=0;j<mazegrid[0].size();++j)
+    for(unsigned int j=0;j<mazegrid[0].size();++j)
     {
       mazegrid[i][j].updateTexture();
     }
@@ -27,9 +27,9 @@ void updateTextures(vector<vector<cell>>& mazegrid)
 // displays the maze using raylib from the given textures
 void drawMaze(Texture& atlas,vector<vector<cell>> mazegrid,Vector2 offset,Vector2 inputScale,Vector2 outputScale)
 {
-  for(int i=0;i<mazegrid.size();++i)
+  for(unsigned int i=0;i<mazegrid.size();++i)
   {
-    for(int j=0;j<mazegrid[0].size();++j)
+    for(unsigned int j=0;j<mazegrid[0].size();++j)
     {
       if(mazegrid[i][j].isPlaced == false)
       {
